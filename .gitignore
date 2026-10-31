@@ -1,0 +1,7 @@
+node_modules/
+dist/
+release/
+.env*
+
+# Verified npm artifacts produced by headless CI.
+artifacts/

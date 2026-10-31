@@ -1,0 +1,20 @@
+{
+	"$schema": "https://orgsdk.ai/schemas/plugin-manifest.v1.json",
+	"name": "google-drive",
+	"version": "0.1.1",
+	"description": "Read-only bounded google-drive workflow evidence for OrgSDK.",
+	"entry": "index.ts",
+	"auth": {
+		"type": "oauth2",
+		"provider": "google-oauth",
+		"label": "google-drive credential",
+		"hint": "Injected secrets only; see README for setup and permission boundaries.",
+		"scopes": ["https://www.googleapis.com/auth/drive.readonly"],
+		"firstParty": false
+	},
+	"marketplace": {
+		"displayName": "Google Drive",
+		"category": "Productivity",
+		"permissionsSummary": "Read-only evidence retrieval, constrained by mandatory configured resource boundaries. No external writes."
+	}
+}
