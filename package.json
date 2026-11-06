@@ -1,6 +1,6 @@
 {
 	"name": "@orgsdk/plugin-google-drive",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "Read-only bounded google-drive workflow evidence for OrgSDK.",
 	"type": "module",
 	"private": true,
