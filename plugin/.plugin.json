@@ -1,7 +1,7 @@
 {
 	"$schema": "https://orgsdk.ai/schemas/plugin-manifest.v1.json",
 	"name": "google-drive",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "Read-only bounded google-drive workflow evidence for OrgSDK.",
 	"entry": "index.ts",
 	"auth": {

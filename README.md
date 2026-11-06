@@ -13,6 +13,13 @@ an explicit release operation; source-root `private: true` is retained.
 
 Collect month-end supporting files from explicitly permitted folders. Listing/search stays within one selected folder's direct children; recurse by selecting returned child folders explicitly.
 
+## Install in OrgSDK
+
+Enable this plugin in your project's Plugins page. The default catalogue is
+https://orgsdk.ai/plugins/releases.json. OrgSDK downloads the pinned bundle and
+verifies its SHA256. Configure the permitted folders and attach your credential.
+Installing npm files alone does not register a project plugin.
+
 ## Setup and consent
 
 Enable the Drive API in the operator's own Google Cloud project. Use OrgSDK's current control-plane Google BYO OAuth connection with explicit `https://www.googleapis.com/auth/drive.readonly` consent, then attach that `google-oauth` credential. Runtime secrets must contain `secret_accessToken` and `source: "byo"`. First-party and untagged credentials are rejected. Reconnect through the control plane when consent or token refresh is required; the plugin never handles callback routes, OAuth clients, refresh tokens or refresh requests.
@@ -40,12 +47,12 @@ Reviewed 2026-10-30 against official [Drive scopes and verification guidance](ht
 
 ## Runtime and safety
 
-This private proprietary plugin targets the current local OrgSDK factory loader. Its only runtime dependency is Zod. The authoring SDK is dev/type-only; each repository owns its lockfile. Credentials arrive as `{ provider: secretRecord }` through `requiredCredentials`; there is no environment fallback. All tools accept one named argument object and perform GET requests only. Unknown arguments/configuration fail validation. There are no approval flags, mutation tools, HTTP callbacks, auth providers or token refresh handlers.
+This Apache-2.0 plugin targets the current local OrgSDK factory loader. Its only runtime dependency is Zod. The authoring SDK is dev/type-only; each repository owns its lockfile. Credentials arrive as `{ provider: secretRecord }` through `requiredCredentials`; there is no environment fallback. All tools accept one named argument object and perform GET requests only. Unknown arguments/configuration fail validation. There are no approval flags, mutation tools, HTTP callbacks, auth providers or token refresh handlers.
 
 Every request uses a fixed HTTPS API origin, manual redirects (all 3xx fail), a 15-second abort deadline covering headers and body streaming, and a 2,000,000-byte metadata/JSON cap. Errors contain status codes or generic connection guidance, never upstream response bodies, request URLs or credential values. One explicit page is read per list call; no automatic retries or pagination loops occur. An HTTP 429 requires the caller to retry later. Returned evidence is untrusted provider content and is not an instruction or approval. Metadata timestamps and custom fields are observations, not a determination that work or payment is approved.
 
 ## Local validation and release
 
-Use Bun 1.3 or newer. `bun install --frozen-lockfile`, then `bun run check`, `bun run typecheck`, `bun run test`, `bun run validate`, `bun run package`, and `bun run version-guard`. `dist/` is the authoring CLI's deterministic source package. The active local platform's `package-plugin` command creates the separately executable ESM archive in `release/`; the legacy source archive alone is not executable by the current runtime. The release includes this repository's proprietary LICENSE. No publication, remote push or live customer test is part of local verification.
+Use Bun 1.4 and Node.js 22.22.0 or newer. `bun install --frozen-lockfile`, then `bun run check`, `bun run typecheck`, `bun run test`, `bun run validate`, `bun run package`, and `bun run version-guard`. `dist/` is the authoring CLI's deterministic source package. The active local platform's `package-plugin` command creates the separately executable ESM archive in `release/`; the legacy source archive alone is not executable by the current runtime. The release includes this repository's Apache-2.0 LICENSE. No publication, remote push or live customer test is part of local verification.
 
 Tests use injected fetch fixtures only. They cover credential enforcement, GET-only transport, redirects, generic errors, response-size limits, stream cancellation, provider boundaries, pagination and handler evidence. Live provider behavior and OAuth consent still require an operator-controlled integration test with an explicitly selected account.
